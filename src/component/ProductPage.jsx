@@ -3,7 +3,7 @@ import React from "react";
 
 const ProductPage = () => {
   return (
-    <Page title="Example app">
+    <Page title="Products">
       <ButtonGroup>
         <Button>Cancel</Button>
         <Button variant="primary">Save</Button>
