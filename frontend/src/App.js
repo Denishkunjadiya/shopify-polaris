@@ -8,11 +8,13 @@ import AddProduct from "./component/AddProduct";
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<ProductPage />} />
-        <Route path="/add" element={<AddProduct />} />
-        <Route path="/*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <div style={{ paddingBottom: "20px" }}>
+        <Routes>
+          <Route path="/" element={<ProductPage />} />
+          <Route path="/add" element={<AddProduct />} />
+          <Route path="/*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </div>
     </BrowserRouter>
   );
 }

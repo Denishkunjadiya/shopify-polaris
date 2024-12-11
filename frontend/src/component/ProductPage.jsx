@@ -13,10 +13,14 @@ import {
   Link,
   Page,
   Button,
+  Image,
 } from "@shopify/polaris";
 import { useState, useCallback } from "react";
+import data from "./data.json";
+
 const ProductPage = () => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const [sortedData, setSortedData] = useState(data);
 
   // save filters list
   const [itemStrings, setItemStrings] = useState([
@@ -95,11 +99,15 @@ const ProductPage = () => {
     return true;
   };
 
+  const [sortSelected, setSortSelected] = useState(["product asc"]);
+
   const sortOptions = [
-    { label: "Product", value: "product asc", directionLabel: "Ascending" },
-    { label: "Product", value: "product desc", directionLabel: "Descending" },
+    { label: "Product", value: "product asc", directionLabel: "A-Z" },
+    { label: "Product", value: "product desc", directionLabel: "Z-A" },
     { label: "Status", value: "status asc", directionLabel: "A-Z" },
     { label: "Status", value: "status desc", directionLabel: "Z-A" },
+    { label: "Inventory", value: "inventory asc", directionLabel: "A-Z" },
+    { label: "Inventory", value: "inventory desc", directionLabel: "Z-A" },
     {
       label: "Sales channels",
       value: "salesChannels asc",
@@ -110,13 +118,16 @@ const ProductPage = () => {
       value: "salesChannels desc",
       directionLabel: "Z-A",
     },
+    { label: "B2B catalogs", value: "b2BCatalogs asc", directionLabel: "A-Z" },
+    { label: "B2B catalogs", value: "b2BCatalogs desc", directionLabel: "Z-A" },
+    { label: "Category", value: "category asc", directionLabel: "A-Z" },
+    { label: "Category", value: "category desc", directionLabel: "Z-A" },
     { label: "Type", value: "type asc", directionLabel: "A-Z" },
     { label: "Type", value: "type desc", directionLabel: "Z-A" },
-    { label: "vendor", value: "vendor asc", directionLabel: "Ascending" },
-    { label: "vendor", value: "vendor desc", directionLabel: "Descending" },
+    { label: "vendor", value: "vendor asc", directionLabel: "A-Z" },
+    { label: "vendor", value: "vendor desc", directionLabel: "Z-A" },
   ];
 
-  const [sortSelected, setSortSelected] = useState(["product asc"]);
   const { mode, setMode } = useSetIndexFiltersMode();
   const onHandleCancel = () => {};
 
@@ -268,174 +279,57 @@ const ProductPage = () => {
     });
   }
 
-  const data = [
-    {
-      id: 1,
-      title: "The Minimal Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 2,
-      title: "Selling Plans Ski Wax",
-      status: "ACTIVE",
-      Category: "",
-      Type: "accessories",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 3,
-      title: "Gift Card",
-      status: "ACTIVE",
-      Category: "Gift Cards",
-      Type: "giftcard",
-      vendor: "Snowboard Vendor",
-    },
-    {
-      id: 4,
-      title: "The Inventory Not Tracked Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 1,
-      title: "The Complete Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Snowboard Vendor",
-    },
-    {
-      id: 1,
-      title: "The Compare at Price Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 1,
-      title: "The Draft Snowboard",
-      status: "DRAFT",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Snowboard Vendor",
-    },
-    {
-      id: 1,
-      title: "The Out of Stock Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 1,
-      title: "The Collection Snowboard: Hydrogen",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Hydrogen Vendor",
-    },
-    {
-      id: 1,
-      title: "The Hidden Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Snowboard Vendor",
-    },
-    {
-      id: 1,
-      title: "The Archived Snowboard",
-      status: "ARCHIVED",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Snowboard Vendor",
-    },
-    {
-      id: 1,
-      title: "The Videographer Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 1,
-      title: "The Multi-location Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 1,
-      title: "The Collection Snowboard: Oxygen",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Hydrogen Vendor",
-    },
-    {
-      id: 1,
-      title: "The 3p Fulfilled Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "denishk.devesha",
-    },
-    {
-      id: 1,
-      title: "The Multi-managed Snowboard",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Multi-managed Vendor",
-    },
-    {
-      id: 1,
-      title: "The Collection Snowboard: Liquid",
-      status: "ACTIVE",
-      Category: "",
-      Type: "snowboard",
-      vendor: "Hydrogen Vendor",
-    },
-  ];
-
-  const resourceName = {
-    singular: "product",
-    plural: "products",
-  };
-
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
     useIndexResourceState(data);
 
-  const rowMarkup = data.map(({ title, status, Type, vendor }, index) => (
-    <IndexTable.Row
-      id={index}
-      key={index}
-      selected={selectedResources.includes(index)}
-      position={index}
-    >
-      <IndexTable.Cell>
-        <Text variant="bodyMd" fontWeight="bold" as="span">
-          {title}
-        </Text>
-      </IndexTable.Cell>
-      <IndexTable.Cell>{status}</IndexTable.Cell>
-      <IndexTable.Cell>{Type}</IndexTable.Cell>
-      <IndexTable.Cell></IndexTable.Cell>
-      <IndexTable.Cell></IndexTable.Cell>
-      <IndexTable.Cell></IndexTable.Cell>
-      <IndexTable.Cell></IndexTable.Cell>
-      <IndexTable.Cell>{vendor}</IndexTable.Cell>
-    </IndexTable.Row>
-  ));
+  const rowMarkup = sortedData.map(
+    ({
+      id,
+      product,
+      status,
+      inventory,
+      salesChannels,
+      B2BCatalogs,
+      category,
+      type,
+      vendor,
+      image,
+    }) => (
+      <IndexTable.Row
+        id={id}
+        key={id}
+        selected={selectedResources.includes(id)}
+        position={id}
+      >
+        <IndexTable.Cell>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
+            <Image
+              height={30}
+              width={30}
+              style={{ marginRight: "10px" }}
+              src={image}
+              alt=""
+            />
+            <Text variant="bodyMd" as="span">
+              {product}
+            </Text>
+          </div>
+        </IndexTable.Cell>
+        <IndexTable.Cell>{status}</IndexTable.Cell>
+        <IndexTable.Cell>{inventory}</IndexTable.Cell>
+        <IndexTable.Cell>{salesChannels}</IndexTable.Cell>
+        <IndexTable.Cell>{B2BCatalogs}</IndexTable.Cell>
+        <IndexTable.Cell>{category}</IndexTable.Cell>
+        <IndexTable.Cell>{type}</IndexTable.Cell>
+        <IndexTable.Cell>{vendor}</IndexTable.Cell>
+      </IndexTable.Row>
+    )
+  );
 
   const [sortedRows, setSortedRows] = useState(null);
 
@@ -505,6 +399,37 @@ const ProductPage = () => {
     }
   }
 
+  const handleSortChange = (sortValue) => {
+    const [field, direction] = sortValue[0].split(" ");
+    const sorted = [...data].sort((a, b) => {
+      if (direction === "asc") {
+        return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
+      } else {
+        return a[field] > b[field] ? -1 : a[field] < b[field] ? 1 : 0;
+      }
+    });
+
+    setSortedData(sorted);
+    setSortSelected(sortValue);
+  };
+
+  const handleSortToggle = (index) => {
+    const sortKeys = [
+      "product",
+      "status",
+      "inventory",
+      "salesChannels",
+      "B2BCatalogs",
+      "category",
+      "type",
+      "vendor",
+    ];
+    const key = sortKeys[index];
+    handleSortChange([
+      sortSelected[0] === `${key} asc` ? `${key} desc` : `${key} asc`,
+    ]);
+  };
+
   return (
     <Page
       title="Products"
@@ -529,7 +454,7 @@ const ProductPage = () => {
           // sort
           sortOptions={sortOptions}
           sortSelected={sortSelected}
-          onSort={setSortSelected}
+          onSort={handleSortChange}
           // search
           queryValue={queryValue}
           queryPlaceholder="Searching in all products"
@@ -555,12 +480,17 @@ const ProductPage = () => {
         />
         <IndexTable
           condensed={useBreakpoints().smDown}
-          resourceName={resourceName}
+          resourceName={{
+            singular: "product",
+            plural: "products",
+          }}
           itemCount={data.length}
           selectedItemsCount={
             allResourcesSelected ? "All" : selectedResources.length
           }
           onSelectionChange={handleSelectionChange}
+          onSort={handleSortToggle}
+          sortable={[true, false, true, false, false, false, true, true]}
           headings={[
             { title: "Product" },
             { title: "Status" },
