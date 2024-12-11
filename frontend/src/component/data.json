@@ -2,7 +2,7 @@
     {
         "id": "01JEV5FXB9GKGJT8FGTN5ZB69D",
         "product": "Chocolate Bar - Coffee Crisp",
-        "status": "Pending",
+        "status": "Archived",
         "inventory": 122,
         "salesChannels": 1,
         "B2BCatalogs": 6,
@@ -14,7 +14,7 @@
     {
         "id": "01JEV5FXBB5F31EC96NTXH7DVS",
         "product": "Cup - 3.5oz, Foam",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 7,
         "salesChannels": 2,
         "B2BCatalogs": 3,
@@ -26,7 +26,7 @@
     {
         "id": "01JEV5FXBDJRQEJGPFPTBFZMRP",
         "product": "Cheese - Marble",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 80,
         "salesChannels": 2,
         "B2BCatalogs": 7,
@@ -38,7 +38,7 @@
     {
         "id": "01JEV5FXBEYSBHGF2JEM35GV17",
         "product": "Juice - V8 Splash",
-        "status": "Inactive",
+        "status": "Draft",
         "inventory": 62,
         "salesChannels": 0,
         "B2BCatalogs": 2,
@@ -50,7 +50,7 @@
     {
         "id": "01JEV5FXBEN78XQP7FAH8D6H2K",
         "product": "Sausage - Andouille",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 39,
         "salesChannels": 2,
         "B2BCatalogs": 1,
@@ -62,7 +62,7 @@
     {
         "id": "01JEV5FXBF5ZXJ6D1WN15M21RV",
         "product": "Beer - Creemore",
-        "status": "Pending",
+        "status": "Archived",
         "inventory": 119,
         "salesChannels": 1,
         "B2BCatalogs": 2,
@@ -74,7 +74,7 @@
     {
         "id": "01JEV5FXBGE019K69NXKAM7GJZ",
         "product": "Wine - Niagara,vqa Reisling",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 70,
         "salesChannels": 1,
         "B2BCatalogs": 3,
@@ -98,7 +98,7 @@
     {
         "id": "01JEV5FXBJNRA4X5NF2E2F08RS",
         "product": "Dasheen",
-        "status": "Active",
+        "status": "Archived",
         "inventory": 19,
         "salesChannels": 0,
         "B2BCatalogs": 4,
@@ -110,7 +110,7 @@
     {
         "id": "01JEV5FXBKFA734AMYW8H1B990",
         "product": "Bread - Bistro Sour",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 54,
         "salesChannels": 1,
         "B2BCatalogs": 3,
@@ -122,7 +122,7 @@
     {
         "id": "01JEV5FXBMSEZYYBJG4ERD3PY5",
         "product": "Sprouts - Alfalfa",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 67,
         "salesChannels": 1,
         "B2BCatalogs": 6,
@@ -134,7 +134,7 @@
     {
         "id": "01JEV5FXBN3QS0QCEW8HSE3SZR",
         "product": "Soup - Campbells - Tomato",
-        "status": "Pending",
+        "status": "Archived",
         "inventory": 139,
         "salesChannels": 2,
         "B2BCatalogs": 6,
@@ -146,7 +146,7 @@
     {
         "id": "01JEV5FXBPYQH780KJ3SGGZA3Y",
         "product": "Spice - Pepper Portions",
-        "status": "Inactive",
+        "status": "Draft",
         "inventory": 62,
         "salesChannels": 0,
         "B2BCatalogs": 9,
@@ -158,7 +158,7 @@
     {
         "id": "01JEV5FXBQMV4208PCDTYGHTDD",
         "product": "Papayas",
-        "status": "Pending",
+        "status": "Archived",
         "inventory": 117,
         "salesChannels": 2,
         "B2BCatalogs": 4,
@@ -182,7 +182,7 @@
     {
         "id": "01JEV5FXBSBF06FF4NHCH70PHM",
         "product": "Calaloo",
-        "status": "Pending",
+        "status": "Archived",
         "inventory": 175,
         "salesChannels": 2,
         "B2BCatalogs": 6,
@@ -194,7 +194,7 @@
     {
         "id": "01JEV5FXBTB00361308GWF450M",
         "product": "Coffee - French Vanilla Frothy",
-        "status": "Pending",
+        "status": "Active",
         "inventory": 29,
         "salesChannels": 0,
         "B2BCatalogs": 9,
@@ -206,7 +206,7 @@
     {
         "id": "01JEV5FXBVB11MY4QJB6W9KEPR",
         "product": "Cheese - Gouda Smoked",
-        "status": "Pending",
+        "status": "Archived",
         "inventory": 127,
         "salesChannels": 2,
         "B2BCatalogs": 7,
@@ -218,7 +218,7 @@
     {
         "id": "01JEV5FXBWQ4D50DY4CTJBPKWH",
         "product": "Sour Cream",
-        "status": "Inactive",
+        "status": "Draft",
         "inventory": 55,
         "salesChannels": 2,
         "B2BCatalogs": 9,
@@ -230,7 +230,7 @@
     {
         "id": "01JEV5FXBYE8W9X3BF4QNQTB8D",
         "product": "Wine - Ej Gallo Sonoma",
-        "status": "Active",
+        "status": "Archived",
         "inventory": 120,
         "salesChannels": 1,
         "B2BCatalogs": 4,

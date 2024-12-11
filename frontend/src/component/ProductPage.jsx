@@ -300,6 +300,7 @@ const ProductPage = () => {
         key={id}
         selected={selectedResources.includes(id)}
         position={id}
+        onClick={() => console.log({ id })}
       >
         <IndexTable.Cell>
           <div
