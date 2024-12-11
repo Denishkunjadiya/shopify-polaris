@@ -12,18 +12,20 @@ import {
   useBreakpoints,
   Link,
   Page,
+  Button,
 } from "@shopify/polaris";
 import { useState, useCallback } from "react";
 const ProductPage = () => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+  // save filters list
   const [itemStrings, setItemStrings] = useState([
     "All",
-    "Unpaid",
-    "Open",
-    "Closed",
-    "Local delivery",
-    "Local pickup",
+    "Active",
+    "Draft",
+    "Archived",
   ]);
+
   const deleteView = (index) => {
     const newItemStrings = [...itemStrings];
     newItemStrings.splice(index, 1);
@@ -94,17 +96,27 @@ const ProductPage = () => {
   };
 
   const sortOptions = [
-    { label: "Order", value: "order asc", directionLabel: "Ascending" },
-    { label: "Order", value: "order desc", directionLabel: "Descending" },
-    { label: "Customer", value: "customer asc", directionLabel: "A-Z" },
-    { label: "Customer", value: "customer desc", directionLabel: "Z-A" },
-    { label: "Date", value: "date asc", directionLabel: "A-Z" },
-    { label: "Date", value: "date desc", directionLabel: "Z-A" },
-    { label: "Total", value: "total asc", directionLabel: "Ascending" },
-    { label: "Total", value: "total desc", directionLabel: "Descending" },
+    { label: "Product", value: "product asc", directionLabel: "Ascending" },
+    { label: "Product", value: "product desc", directionLabel: "Descending" },
+    { label: "Status", value: "status asc", directionLabel: "A-Z" },
+    { label: "Status", value: "status desc", directionLabel: "Z-A" },
+    {
+      label: "Sales channels",
+      value: "salesChannels asc",
+      directionLabel: "A-Z",
+    },
+    {
+      label: "Sales channels",
+      value: "salesChannels desc",
+      directionLabel: "Z-A",
+    },
+    { label: "Type", value: "type asc", directionLabel: "A-Z" },
+    { label: "Type", value: "type desc", directionLabel: "Z-A" },
+    { label: "vendor", value: "vendor asc", directionLabel: "Ascending" },
+    { label: "vendor", value: "vendor desc", directionLabel: "Descending" },
   ];
 
-  const [sortSelected, setSortSelected] = useState(["order asc"]);
+  const [sortSelected, setSortSelected] = useState(["product asc"]);
   const { mode, setMode } = useSetIndexFiltersMode();
   const onHandleCancel = () => {};
 
@@ -159,6 +171,7 @@ const ProductPage = () => {
   );
   const handleTaggedWithRemove = useCallback(() => setTaggedWith(""), []);
   const handleQueryValueRemove = useCallback(() => setQueryValue(""), []);
+
   const handleFiltersClearAll = useCallback(() => {
     handleAccountStatusRemove();
     handleMoneySpentRemove();
@@ -227,6 +240,7 @@ const ProductPage = () => {
 
   const appliedFilters = [];
   appliedFilters["appliedFilters"] = [];
+
   if (accountStatus && !isEmpty(accountStatus)) {
     const key = "accountStatus";
     appliedFilters.push({
@@ -235,6 +249,7 @@ const ProductPage = () => {
       onRemove: handleAccountStatusRemove,
     });
   }
+
   if (moneySpent) {
     const key = "moneySpent";
     appliedFilters.push({
@@ -243,6 +258,7 @@ const ProductPage = () => {
       onRemove: handleMoneySpentRemove,
     });
   }
+
   if (!isEmpty(taggedWith)) {
     const key = "taggedWith";
     appliedFilters.push({
@@ -252,84 +268,174 @@ const ProductPage = () => {
     });
   }
 
-  const orders = [
+  const data = [
     {
-      id: "1020",
-      order: (
-        <Text as="span" variant="bodyMd" fontWeight="semibold">
-          #1020
-        </Text>
-      ),
-      date: "Jul 20 at 4:34pm",
-      customer: "Jaydon Stanton",
-      total: "$969.44",
-      paymentStatus: <Badge progress="complete">Paid</Badge>,
-      fulfillmentStatus: <Badge progress="incomplete">Unfulfilled</Badge>,
+      id: 1,
+      title: "The Minimal Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "",
+      vendor: "denishk.devesha",
     },
     {
-      id: "1019",
-      order: (
-        <Text as="span" variant="bodyMd" fontWeight="semibold">
-          #1019
-        </Text>
-      ),
-      date: "Jul 20 at 3:46pm",
-      customer: "Ruben Westerfelt",
-      total: "$701.19",
-      paymentStatus: <Badge progress="partiallyComplete">Partially paid</Badge>,
-      fulfillmentStatus: <Badge progress="incomplete">Unfulfilled</Badge>,
+      id: 2,
+      title: "Selling Plans Ski Wax",
+      status: "ACTIVE",
+      Category: "",
+      Type: "accessories",
+      vendor: "denishk.devesha",
     },
     {
-      id: "1018",
-      order: (
-        <Text as="span" variant="bodyMd" fontWeight="semibold">
-          #1018
-        </Text>
-      ),
-      date: "Jul 20 at 3.44pm",
-      customer: "Leo Carder",
-      total: "$798.24",
-      paymentStatus: <Badge progress="complete">Paid</Badge>,
-      fulfillmentStatus: <Badge progress="incomplete">Unfulfilled</Badge>,
+      id: 3,
+      title: "Gift Card",
+      status: "ACTIVE",
+      Category: "Gift Cards",
+      Type: "giftcard",
+      vendor: "Snowboard Vendor",
+    },
+    {
+      id: 4,
+      title: "The Inventory Not Tracked Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "denishk.devesha",
+    },
+    {
+      id: 1,
+      title: "The Complete Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Snowboard Vendor",
+    },
+    {
+      id: 1,
+      title: "The Compare at Price Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "denishk.devesha",
+    },
+    {
+      id: 1,
+      title: "The Draft Snowboard",
+      status: "DRAFT",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Snowboard Vendor",
+    },
+    {
+      id: 1,
+      title: "The Out of Stock Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "denishk.devesha",
+    },
+    {
+      id: 1,
+      title: "The Collection Snowboard: Hydrogen",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Hydrogen Vendor",
+    },
+    {
+      id: 1,
+      title: "The Hidden Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Snowboard Vendor",
+    },
+    {
+      id: 1,
+      title: "The Archived Snowboard",
+      status: "ARCHIVED",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Snowboard Vendor",
+    },
+    {
+      id: 1,
+      title: "The Videographer Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "denishk.devesha",
+    },
+    {
+      id: 1,
+      title: "The Multi-location Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "denishk.devesha",
+    },
+    {
+      id: 1,
+      title: "The Collection Snowboard: Oxygen",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Hydrogen Vendor",
+    },
+    {
+      id: 1,
+      title: "The 3p Fulfilled Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "denishk.devesha",
+    },
+    {
+      id: 1,
+      title: "The Multi-managed Snowboard",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Multi-managed Vendor",
+    },
+    {
+      id: 1,
+      title: "The Collection Snowboard: Liquid",
+      status: "ACTIVE",
+      Category: "",
+      Type: "snowboard",
+      vendor: "Hydrogen Vendor",
     },
   ];
 
   const resourceName = {
-    singular: "order",
-    plural: "orders",
+    singular: "product",
+    plural: "products",
   };
 
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
-    useIndexResourceState(orders);
+    useIndexResourceState(data);
 
-  const rowMarkup = orders.map(
-    (
-      { id, order, date, customer, total, paymentStatus, fulfillmentStatus },
-      index
-    ) => (
-      <IndexTable.Row
-        id={id}
-        key={id}
-        selected={selectedResources.includes(id)}
-        position={index}
-      >
-        <IndexTable.Cell>
-          <Text variant="bodyMd" fontWeight="bold" as="span">
-            {order}
-          </Text>
-        </IndexTable.Cell>
-        <IndexTable.Cell>{date}</IndexTable.Cell>
-        <IndexTable.Cell>{customer}</IndexTable.Cell>
-        <IndexTable.Cell>
-          <Text as="span" alignment="end" numeric>
-            {total}
-          </Text>
-        </IndexTable.Cell>
-        <IndexTable.Cell>{paymentStatus}</IndexTable.Cell>
-        <IndexTable.Cell>{fulfillmentStatus}</IndexTable.Cell>
-      </IndexTable.Row>
-    )
-  );
+  const rowMarkup = data.map(({ title, status, Type, vendor }, index) => (
+    <IndexTable.Row
+      id={index}
+      key={index}
+      selected={selectedResources.includes(index)}
+      position={index}
+    >
+      <IndexTable.Cell>
+        <Text variant="bodyMd" fontWeight="bold" as="span">
+          {title}
+        </Text>
+      </IndexTable.Cell>
+      <IndexTable.Cell>{status}</IndexTable.Cell>
+      <IndexTable.Cell>{Type}</IndexTable.Cell>
+      <IndexTable.Cell></IndexTable.Cell>
+      <IndexTable.Cell></IndexTable.Cell>
+      <IndexTable.Cell></IndexTable.Cell>
+      <IndexTable.Cell></IndexTable.Cell>
+      <IndexTable.Cell>{vendor}</IndexTable.Cell>
+    </IndexTable.Row>
+  ));
 
   const [sortedRows, setSortedRows] = useState(null);
 
@@ -400,7 +506,24 @@ const ProductPage = () => {
   }
 
   return (
-    <Page title="Products">
+    <Page
+      title="Products"
+      primaryAction={{
+        content: "Add product",
+        helpText: "Add product",
+        onAction: (e) => {},
+      }}
+      secondaryActions={[
+        {
+          content: "Export",
+          helpText: "Export",
+        },
+        {
+          content: "Import",
+          helpText: "Import",
+        },
+      ]}
+    >
       <LegacyCard>
         <IndexFilters
           // sort
@@ -423,6 +546,7 @@ const ProductPage = () => {
           onSelect={setSelected}
           canCreateNewView
           onCreateNewView={onCreateNewView}
+          // filters
           filters={filters}
           appliedFilters={appliedFilters}
           onClearAll={handleFiltersClearAll}
@@ -432,18 +556,20 @@ const ProductPage = () => {
         <IndexTable
           condensed={useBreakpoints().smDown}
           resourceName={resourceName}
-          itemCount={orders.length}
+          itemCount={data.length}
           selectedItemsCount={
             allResourcesSelected ? "All" : selectedResources.length
           }
           onSelectionChange={handleSelectionChange}
           headings={[
-            { title: "Order" },
-            { title: "Date" },
-            { title: "Customer" },
-            { title: "Total", alignment: "end" },
-            { title: "Payment status" },
-            { title: "Fulfillment status" },
+            { title: "Product" },
+            { title: "Status" },
+            { title: "Inventory" },
+            { title: "Sales channels", alignment: "end" },
+            { title: "B2B catalogs", alignment: "end" },
+            { title: "Category" },
+            { title: "Type" },
+            { title: "Vendor" },
           ]}
         >
           {rowMarkup}
@@ -454,86 +580,3 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
-
-// import { DataTable, LegacyCard, Link, Page } from "@shopify/polaris";
-// import React, { useCallback, useState } from "react";
-
-// const ProductPage = () => {
-//   const [sortedRows, setSortedRows] = useState(null);
-
-//   const initiallySortedRows = [
-//     [
-//       <Link removeUnderline url="/add">
-//         Emerald Silk Gown
-//       </Link>,
-//       "$875.00",
-//       124689,
-//       140,
-//       "$122,500.00",
-//     ],
-//     ["Emerald Silk Gown", "$875.00", 124689, 140, "$122,500.00"],
-//     ["Mauve Cashmere Scarf", "$230.00", 124533, 83, "$19,090.00"],
-//     [
-//       "Navy Merino Wool Blazer with khaki chinos and yellow belt",
-//       "$445.00",
-//       124518,
-//       32,
-//       "$14,240.00",
-//     ],
-//   ];
-
-//   const rows = sortedRows ? sortedRows : initiallySortedRows;
-
-//   const sortArray = (rows, index, direction) => {
-//     return [...rows].sort((rowA, rowB) => {
-//       const amountA = (rowA[index] || "").toString();
-//       const amountB = (rowB[index] || "").toString();
-
-//       if (typeof amountA === "number") {
-//         return direction === "descending"
-//           ? amountB - amountA
-//           : amountA - amountB;
-//       } else if (typeof amountA === "string") {
-//         return direction === "descending"
-//           ? amountB.localeCompare(amountA)
-//           : amountA.localeCompare(amountB);
-//       }
-//     });
-//   };
-
-//   const handleSort = useCallback(
-//     (index, direction) => setSortedRows(sortArray(rows, index, direction)),
-//     [rows]
-//   );
-
-//   return (
-//     <Page title="Products">
-//       <LegacyCard>
-//         <DataTable
-//           columnContentTypes={[
-//             "text",
-//             "numeric",
-//             "numeric",
-//             "numeric",
-//             "numeric",
-//           ]}
-//           sortable={[true, false, false, false, false]}
-//           defaultSortDirection="descending"
-//           initialSortColumnIndex={4}
-//           headings={[
-//             "Product",
-//             "Price",
-//             "SKU Number",
-//             "Net quantity",
-//             "Net sales",
-//           ]}
-//           stickyHeader
-//           rows={rows}
-//           onSort={handleSort}
-//         />
-//       </LegacyCard>
-//     </Page>
-//   );
-// };
-
-// export default ProductPage;
