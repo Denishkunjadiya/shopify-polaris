@@ -1,25 +1,26 @@
 import {
-  TextField,
+  Badge,
+  ChoiceList,
+  Image,
+  IndexFilters,
   IndexTable,
   LegacyCard,
-  IndexFilters,
-  useSetIndexFiltersMode,
-  useIndexResourceState,
-  Text,
-  ChoiceList,
-  RangeSlider,
-  Badge,
-  useBreakpoints,
   Link,
   Page,
-  Button,
-  Image,
+  RangeSlider,
+  Text,
+  TextField,
+  useBreakpoints,
+  useIndexResourceState,
+  useSetIndexFiltersMode,
 } from "@shopify/polaris";
-import { useState, useCallback } from "react";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import data from "./data.json";
 
 const ProductPage = () => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const navigate = useNavigate();
   const [sortedData, setSortedData] = useState(data);
 
   // save filters list
@@ -249,6 +250,19 @@ const ProductPage = () => {
     },
   ];
 
+  const getStatus = (key) => {
+    switch (key) {
+      case "Active":
+        return "success";
+      case "Archived":
+        return "complete";
+      case "Draft":
+        return "info";
+      default:
+        break;
+    }
+  };
+
   const appliedFilters = [];
   appliedFilters["appliedFilters"] = [];
 
@@ -321,7 +335,9 @@ const ProductPage = () => {
             </Text>
           </div>
         </IndexTable.Cell>
-        <IndexTable.Cell>{status}</IndexTable.Cell>
+        <IndexTable.Cell>
+          <Badge tone={getStatus(status)}>{status}</Badge>
+        </IndexTable.Cell>
         <IndexTable.Cell>{inventory}</IndexTable.Cell>
         <IndexTable.Cell>{salesChannels}</IndexTable.Cell>
         <IndexTable.Cell>{B2BCatalogs}</IndexTable.Cell>
@@ -330,53 +346,6 @@ const ProductPage = () => {
         <IndexTable.Cell>{vendor}</IndexTable.Cell>
       </IndexTable.Row>
     )
-  );
-
-  const [sortedRows, setSortedRows] = useState(null);
-
-  const initiallySortedRows = [
-    [
-      <Link removeUnderline url="/add">
-        Emerald Silk Gown
-      </Link>,
-      "$875.00",
-      124689,
-      140,
-      "$122,500.00",
-    ],
-    ["Emerald Silk Gown", "$875.00", 124689, 140, "$122,500.00"],
-    ["Mauve Cashmere Scarf", "$230.00", 124533, 83, "$19,090.00"],
-    [
-      "Navy Merino Wool Blazer with khaki chinos and yellow belt",
-      "$445.00",
-      124518,
-      32,
-      "$14,240.00",
-    ],
-  ];
-
-  const rows = sortedRows ? sortedRows : initiallySortedRows;
-
-  const sortArray = (rows, index, direction) => {
-    return [...rows].sort((rowA, rowB) => {
-      const amountA = (rowA[index] || "").toString();
-      const amountB = (rowB[index] || "").toString();
-
-      if (typeof amountA === "number") {
-        return direction === "descending"
-          ? amountB - amountA
-          : amountA - amountB;
-      } else if (typeof amountA === "string") {
-        return direction === "descending"
-          ? amountB.localeCompare(amountA)
-          : amountA.localeCompare(amountB);
-      }
-    });
-  };
-
-  const handleSort = useCallback(
-    (index, direction) => setSortedRows(sortArray(rows, index, direction)),
-    [rows]
   );
 
   function disambiguateLabel(key, value) {
@@ -431,13 +400,29 @@ const ProductPage = () => {
     ]);
   };
 
+  const getColumnIndex = () => {
+    const columnList = [
+      "product",
+      "status",
+      "inventory",
+      "salesChannels",
+      "B2BCatalogs",
+      "category",
+      "type",
+      "vendor",
+    ];
+    if (!sortSelected || sortSelected.length === 0) return -1;
+    const [field] = sortSelected[0].split(" ");
+    return columnList.findIndex((item) => item === field);
+  };
+
   return (
     <Page
       title="Products"
       primaryAction={{
         content: "Add product",
         helpText: "Add product",
-        onAction: (e) => {},
+        onAction: () => navigate("/add"),
       }}
       secondaryActions={[
         {
@@ -492,6 +477,10 @@ const ProductPage = () => {
           onSelectionChange={handleSelectionChange}
           onSort={handleSortToggle}
           sortable={[true, false, true, false, false, false, true, true]}
+          sortDirection={
+            sortSelected[0].split(" ")[1] === "asc" ? "ascending" : "descending"
+          }
+          sortColumnIndex={getColumnIndex()}
           headings={[
             { title: "Product" },
             { title: "Status" },
