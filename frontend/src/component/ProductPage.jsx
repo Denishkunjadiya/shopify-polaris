@@ -1,11 +1,10 @@
 import {
   Badge,
+  Card,
   ChoiceList,
   Image,
   IndexFilters,
   IndexTable,
-  LegacyCard,
-  Link,
   Page,
   RangeSlider,
   Text,
@@ -435,7 +434,7 @@ const ProductPage = () => {
         },
       ]}
     >
-      <LegacyCard>
+      <Card>
         <IndexFilters
           // sort
           sortOptions={sortOptions}
@@ -494,7 +493,7 @@ const ProductPage = () => {
         >
           {rowMarkup}
         </IndexTable>
-      </LegacyCard>
+      </Card>
     </Page>
   );
 };
