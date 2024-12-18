@@ -1,4 +1,4 @@
-import { BlockStack, DropZone, Text, Thumbnail } from "@shopify/polaris";
+import { BlockStack, DropZone, Thumbnail } from "@shopify/polaris";
 import { NoteIcon } from "@shopify/polaris-icons";
 import { useCallback, useState } from "react";
 

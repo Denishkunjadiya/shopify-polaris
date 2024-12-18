@@ -11,10 +11,10 @@ import {
 } from "ckeditor5";
 
 import {
+  // Autocomplete,
   Box,
   Card,
   FormLayout,
-  InlineError,
   Label,
   Layout,
   Page,
@@ -25,9 +25,11 @@ import "ckeditor5/ckeditor5.css";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import ImageUpload from "./ImageUpload";
+import CommonAutocomplete from "./CommonAutocomplate";
 
 const AddProduct = () => {
   const navigate = useNavigate();
+
   return (
     <Page
       title="Add product"
@@ -101,13 +103,7 @@ const AddProduct = () => {
             </Box>
             <Box style={{ marginBottom: "15px" }}>
               <FormLayout>
-                <TextField
-                  label="Category"
-                  placeholder="Enter title"
-                  // onChange={() => {}}
-                  autoComplete="off"
-                  error="Store name is required"
-                />
+                <CommonAutocomplete />
               </FormLayout>
             </Box>
           </Card>
@@ -119,37 +115,6 @@ const AddProduct = () => {
           </Card>
         </Layout.Section>
       </Layout>
-
-      {/* <Card sectioned>
-        
-        <CKEditorContext
-          context={Context}
-          contextWatchdog={ContextWatchdog}
-          onChangeInitializedEditors={(editors) => {
-            console.info(
-              editors.editor1?.instance,
-              editors.editor1?.yourAdditionalData
-            );
-          }}
-        >
-          <CKEditor
-            editor={ClassicEditor}
-            config={{
-              plugins: [Essentials, Bold, Italic, Paragraph],
-              toolbar: ["undo", "redo", "|", "bold", "italic"],
-            }}
-            data="<p>Hello from the first editor working with the context!</p>"
-            contextItemMetadata={{
-              name: "editor1",
-              yourAdditionalData: 2,
-            }}
-            onReady={(editor) => {
-              // You can store the "editor" and use when it is needed.
-              console.log("Editor 1 is ready to use!", editor);
-            }}
-          />
-        </CKEditorContext>
-      </Card> */}
     </Page>
   );
 };
