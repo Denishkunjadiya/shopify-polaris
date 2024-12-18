@@ -1,9 +1,10 @@
-import "@shopify/polaris/build/esm/styles.css";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
 import "./App.css";
+import AddProduct from "./component/AddProduct";
 import ProductPage from "./component/ProductPage";
 
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import AddProduct from "./component/AddProduct";
+import "@shopify/polaris/build/esm/styles.css";
 
 function App() {
   return (

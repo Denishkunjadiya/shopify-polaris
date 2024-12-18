@@ -1,13 +1,14 @@
+import { useCallback, useState } from "react";
+
 import { BlockStack, DropZone, Thumbnail } from "@shopify/polaris";
 import { NoteIcon } from "@shopify/polaris-icons";
-import { useCallback, useState } from "react";
 
 export default function ImageUpload() {
   const [file, setFile] = useState();
 
   const handleDropZoneDrop = useCallback(
     (_dropFiles, acceptedFiles, _rejectedFiles) => setFile(acceptedFiles[0]),
-    []
+    [],
   );
 
   const validImageTypes = ["image/gif", "image/jpeg", "image/png"];

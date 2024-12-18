@@ -1,5 +1,6 @@
-import { Autocomplete } from "@shopify/polaris";
 import React, { useCallback, useMemo, useState } from "react";
+
+import { Autocomplete } from "@shopify/polaris";
 
 const CommonAutocomplate = ({
   label = "Search",
@@ -29,11 +30,11 @@ const CommonAutocomplate = ({
 
       const filterRegex = new RegExp(value, "i");
       const resultOptions = deselectedOptions.filter((option) =>
-        option.label.match(filterRegex)
+        option.label.match(filterRegex),
       );
       setOptions(resultOptions);
     },
-    [deselectedOptions]
+    [deselectedOptions],
   );
 
   const updateSelection = useCallback(
@@ -49,7 +50,7 @@ const CommonAutocomplate = ({
       setInputValue(selectedValue[0] || "");
       onSelectionChange(selectedValue); // Notify parent about selection changes
     },
-    [options, onSelectionChange]
+    [options, onSelectionChange],
   );
 
   const textField = (

@@ -1,15 +1,6 @@
-import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
-import {
-  Bold,
-  ClassicEditor,
-  Context,
-  ContextWatchdog,
-  Essentials,
-  Italic,
-  List,
-  Paragraph,
-} from "ckeditor5";
+import React from "react";
 
+import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 import {
   // Autocomplete,
   Box,
@@ -20,12 +11,23 @@ import {
   Page,
   TextField,
 } from "@shopify/polaris";
+import {
+  Bold,
+  ClassicEditor,
+  Context,
+  ContextWatchdog,
+  Essentials,
+  Italic,
+  List,
+  Paragraph,
+} from "ckeditor5";
+import { useNavigate } from "react-router-dom";
+
+import CommonAutocomplete from "./CommonAutocomplate";
+import ImageUpload from "./ImageUpload";
+
 import "ckeditor5-premium-features/ckeditor5-premium-features.css";
 import "ckeditor5/ckeditor5.css";
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import ImageUpload from "./ImageUpload";
-import CommonAutocomplete from "./CommonAutocomplate";
 
 const AddProduct = () => {
   const navigate = useNavigate();
@@ -66,7 +68,7 @@ const AddProduct = () => {
                   onChangeInitializedEditors={(editors) => {
                     console.info(
                       editors.editor1?.instance,
-                      editors.editor1?.yourAdditionalData
+                      editors.editor1?.yourAdditionalData,
                     );
                   }}
                 >

@@ -1,3 +1,5 @@
+import { useCallback, useState } from "react";
+
 import {
   Badge,
   Card,
@@ -13,8 +15,8 @@ import {
   useIndexResourceState,
   useSetIndexFiltersMode,
 } from "@shopify/polaris";
-import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 import data from "./data.json";
 
 const ProductPage = () => {
@@ -158,27 +160,27 @@ const ProductPage = () => {
 
   const handleAccountStatusChange = useCallback(
     (value) => setAccountStatus(value),
-    []
+    [],
   );
   const handleMoneySpentChange = useCallback(
     (value) => setMoneySpent(value),
-    []
+    [],
   );
   const handleTaggedWithChange = useCallback(
     (value) => setTaggedWith(value),
-    []
+    [],
   );
   const handleFiltersQueryChange = useCallback(
     (value) => setQueryValue(value),
-    []
+    [],
   );
   const handleAccountStatusRemove = useCallback(
     () => setAccountStatus(undefined),
-    []
+    [],
   );
   const handleMoneySpentRemove = useCallback(
     () => setMoneySpent(undefined),
-    []
+    [],
   );
   const handleTaggedWithRemove = useCallback(() => setTaggedWith(""), []);
   const handleQueryValueRemove = useCallback(() => setQueryValue(""), []);
@@ -344,7 +346,7 @@ const ProductPage = () => {
         <IndexTable.Cell>{type}</IndexTable.Cell>
         <IndexTable.Cell>{vendor}</IndexTable.Cell>
       </IndexTable.Row>
-    )
+    ),
   );
 
   function disambiguateLabel(key, value) {
