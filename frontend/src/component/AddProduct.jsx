@@ -4,13 +4,18 @@ import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 import {
   // Autocomplete,
   Box,
+  Button,
+  ButtonGroup,
   Card,
   FormLayout,
+  InlineStack,
   Label,
   Layout,
   Page,
+  Text,
   TextField,
 } from "@shopify/polaris";
+import { PlusIcon } from "@shopify/polaris-icons";
 import {
   Bold,
   ClassicEditor,
@@ -40,7 +45,7 @@ const AddProduct = () => {
     >
       <Layout>
         <Layout.Section>
-          <Card sectioned>
+          <Card>
             <Box style={{ marginBottom: "15px" }}>
               <FormLayout>
                 <TextField
@@ -109,14 +114,43 @@ const AddProduct = () => {
               </FormLayout>
             </Box>
           </Card>
+
+          <Box style={{ marginTop: "15px" }}>
+            <Card>
+              <Text as="h2" variant="headingSm">
+                Pricing
+              </Text>
+              <Box paddingBlockStart="200">
+                <Text as="p" variant="bodyMd">
+                  View a summary of your online store’s performance.
+                </Text>
+              </Box>
+            </Card>
+          </Box>
         </Layout.Section>
 
         <Layout.Section variant="oneThird">
-          <Card title="Tags" sectioned>
+          <Card title="Tags">
             <p>Add tags to your order.</p>
           </Card>
         </Layout.Section>
       </Layout>
+
+      {/* Footer */}
+      <InlineStack align="end">
+        <ButtonGroup>
+          <Button onClick={() => {}} accessibilityLabel="Cancel">
+            Cancel
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {}}
+            accessibilityLabel="Save"
+          >
+            Save
+          </Button>
+        </ButtonGroup>
+      </InlineStack>
     </Page>
   );
 };
