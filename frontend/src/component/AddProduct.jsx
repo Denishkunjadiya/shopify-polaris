@@ -2,12 +2,16 @@ import React from "react";
 
 import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 import {
+  Bleed,
   // Autocomplete,
   Box,
   Button,
   ButtonGroup,
   Card,
+  Checkbox,
+  Divider,
   FormLayout,
+  InlineGrid,
   InlineStack,
   Label,
   Layout,
@@ -15,7 +19,6 @@ import {
   Text,
   TextField,
 } from "@shopify/polaris";
-import { PlusIcon } from "@shopify/polaris-icons";
 import {
   Bold,
   ClassicEditor,
@@ -121,9 +124,63 @@ const AddProduct = () => {
                 Pricing
               </Text>
               <Box paddingBlockStart="200">
-                <Text as="p" variant="bodyMd">
-                  View a summary of your online store’s performance.
-                </Text>
+                <InlineGrid gap="400" columns={{ xs: 1, md: 3 }}>
+                  <TextField
+                    label="Price"
+                    type="number"
+                    value={0.0}
+                    // onChange={handleChange}
+                    prefix="₹"
+                    autoComplete="off"
+                  />
+                  <TextField
+                    label="Compare-at price"
+                    type="number"
+                    value={0.0}
+                    // onChange={handleChange}
+                    prefix="₹"
+                    autoComplete="off"
+                  />
+                </InlineGrid>
+
+                <Box paddingBlock="200">
+                  <Checkbox
+                    label="Charge tax on this product"
+                    // checked={checked}
+                    // onChange={handleChange}
+                  />
+                </Box>
+              </Box>
+              <Bleed marginInline="400">
+                <Divider borderColor="border" />
+              </Bleed>
+              <Box paddingBlockStart="200">
+                <InlineGrid
+                  gap="400"
+                  columns={{ xs: 1, md: 3 }}
+                  // columns={3}
+                >
+                  <TextField
+                    label="Cost per item"
+                    type="number"
+                    value={0.0}
+                    // onChange={handleChange}
+                    prefix="₹"
+                    autoComplete="off"
+                  />
+                  <TextField
+                    label="Profit"
+                    value={"--"}
+                    prefix="₹"
+                    autoComplete="off"
+                  />
+                  <TextField
+                    suffix="%"
+                    label="Margin"
+                    value={"--"}
+                    autoComplete="off"
+                  />
+                </InlineGrid>
               </Box>
             </Card>
           </Box>

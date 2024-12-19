@@ -59,6 +59,7 @@ const CommonAutocomplate = ({
       label={label}
       value={inputValue}
       placeholder={placeholder}
+      helpText="Determines tax rates and adds metafields to improve search, filters, and cross-channel sales"
       autoComplete="off"
     />
   );
