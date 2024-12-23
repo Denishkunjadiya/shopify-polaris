@@ -3,6 +3,7 @@ import React from "react";
 import { CKEditor, CKEditorContext } from "@ckeditor/ckeditor5-react";
 import {
   Autocomplete,
+  Badge,
   Bleed,
   // Autocomplete,
   Box,
@@ -50,10 +51,57 @@ import "ckeditor5/ckeditor5.css";
 const AddProduct = () => {
   const navigate = useNavigate();
 
+  const getStatus = (key) => {
+    switch (key) {
+      case "Active":
+        return "success";
+      case "Archived":
+        return "complete";
+      case "Draft":
+        return "info";
+      default:
+        break;
+    }
+  };
+
   return (
     <Page
       title="Add product"
+      titleMetadata={<Badge tone={getStatus("Active")}>Paid</Badge>}
       //  narrowWidth
+      secondaryActions={[
+        {
+          content: "Duplicate",
+          accessibilityLabel: "Secondary action label",
+          onAction: () => alert("Duplicate action"),
+        },
+        {
+          content: "Preview",
+          onAction: () => alert("View on your store action"),
+        },
+      ]}
+      actionGroups={[
+        {
+          title: "Share",
+          actions: [
+            {
+              content: "Share on Facebook",
+              accessibilityLabel: "Individual action label",
+              onAction: () => alert("Share on Facebook action"),
+            },
+          ],
+        },
+        {
+          title: "More actions",
+          actions: [
+            {
+              content: "Share on Facebook",
+              accessibilityLabel: "Individual action label",
+              onAction: () => alert("Share on Facebook action"),
+            },
+          ],
+        },
+      ]}
       backAction={{ onAction: () => navigate("/") }}
     >
       <Layout>
