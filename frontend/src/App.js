@@ -7,6 +7,7 @@ import ProductPage from "./component/ProductPage";
 import "@shopify/polaris/build/esm/styles.css";
 
 function App() {
+  console.log(process.env.REACT_APP_BASE_URL);
   return (
     <BrowserRouter>
       <div style={{ paddingBottom: "20px" }}>

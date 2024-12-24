@@ -41,9 +41,9 @@ import {
 } from "ckeditor5";
 import { useNavigate } from "react-router-dom";
 
-import CommonAutocomplete from "./CommonAutocomplate";
-import CommonCombobox from "./CommonCombobox";
 import ImageUpload from "./ImageUpload";
+import CommonAutocomplete from "./commonComponent/CommonAutocomplate";
+import CommonCombobox from "./commonComponent/CommonCombobox";
 
 import "ckeditor5-premium-features/ckeditor5-premium-features.css";
 import "ckeditor5/ckeditor5.css";
@@ -245,11 +245,13 @@ const AddProduct = () => {
               </Text>
               <Box paddingBlockStart="200">
                 <Checkbox label="Track quantity" />
+              </Box>
+              <Box paddingBlockStart="200">
                 <InlineGrid columns="1fr auto">
                   <Text as="h3" variant="headingSm" fontWeight="medium">
                     Quantity
                   </Text>
-                  <Button variant="plain">Edit locations</Button>
+                  {/* <Button variant="plain">Edit locations</Button> */}
                 </InlineGrid>
               </Box>
 
@@ -355,14 +357,14 @@ const AddProduct = () => {
             </Card>
           </Box>
 
-          <Box style={{ marginTop: "15px" }}>
+          {/* <Box style={{ marginTop: "15px" }}>
             <Card>
               <Text as="h2" variant="headingSm">
                 Variants
               </Text>
               <Box paddingBlockStart="200"></Box>
             </Card>
-          </Box>
+          </Box> */}
 
           <Box style={{ marginTop: "15px" }}>
             <Card>
@@ -376,8 +378,6 @@ const AddProduct = () => {
                   </Text>
                   <TextField
                     placeholder={0}
-                    type="number"
-                    min={0}
                     // onChange={() => {}}
                   />
                 </InlineGrid>
@@ -390,8 +390,8 @@ const AddProduct = () => {
                   </Text>
                   <TextField
                     placeholder={0}
-                    type="number"
-                    min={0}
+                    // type="number"
+                    // min={0}
                     // onChange={() => {}}
                   />
                 </InlineGrid>

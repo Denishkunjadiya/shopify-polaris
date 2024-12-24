@@ -1,10 +1,10 @@
-import Validation from "../../model/schema/validation.js";
+import Product from "../../model/schema/product.js";
 
 const index = async (req, res) => {
   try {
     const query = req.query;
     query.deleted = false;
-    let result = await Validation.find(query);
+    let result = await Product.find(query);
     return res.send(result);
   } catch (err) {
     console.error("Error :", err);
@@ -18,33 +18,16 @@ const index = async (req, res) => {
 
 const add = async (req, res) => {
   try {
-    if (!req.body?.name) {
-      return res
-        .status(400)
-        .json({ success: false, message: `Validation name is required` });
-    }
-
-    let existingValidation = await Validation.findOne({
-      name: { $regex: new RegExp(`^${req.body.name}$`, "i") },
-    });
-    if (existingValidation) {
-      return res
-        .status(400)
-        .json({ success: false, message: `Validation name already exist` });
-    }
-
-    req.body.createdDate = new Date();
-
-    const validation = new Validation(req.body);
-    await validation.save();
+    const product = new Product(req.body);
+    await product.save();
     return res
       .status(200)
-      .json({ message: "Validation added successfully", result: validation });
+      .json({ message: "Product added successfully", result: product });
   } catch (err) {
-    console.error("Failed to add validation:", err);
+    console.error("Failed to add product:", err);
     return res.status(400).json({
       success: false,
-      message: "Failed to add validation",
+      message: "Failed to add product",
       error: err.toString(),
     });
   }
@@ -52,15 +35,17 @@ const add = async (req, res) => {
 
 const view = async (req, res) => {
   try {
-    const validationDoc = await Validation.findOne({
+    const productDoc = await Product.findOne({
       _id: req.params.id,
       deleted: false,
     });
-    if (!validationDoc)
+
+    if (!productDoc)
       return res
         .status(404)
         .json({ success: false, message: "No Data Found." });
-    return res.send(validationDoc);
+
+    return res.send(productDoc);
   } catch (err) {
     console.error("Failed to display:", err);
     return res.status(400).json({
@@ -71,9 +56,9 @@ const view = async (req, res) => {
   }
 };
 
-const editWholeValidationsArray = async (req, res) => {
+const editProduct = async (req, res) => {
   try {
-    let result = await Validation.updateOne(
+    let result = await Product.updateOne(
       { _id: req.params.id },
       { $set: req.body }
     );
@@ -81,27 +66,27 @@ const editWholeValidationsArray = async (req, res) => {
     if (result?.modifiedCount > 0) {
       return res
         .status(200)
-        .json({ message: "Validations updated successfully", result });
+        .json({ message: "Product updated successfully", result });
     } else {
       return res
         .status(404)
-        .json({ message: "Failed to update validations", result });
+        .json({ message: "Failed to update product", result });
     }
   } catch (err) {
-    console.error("Failed to Update validations:", err);
+    console.error("Failed to Update product:", err);
     return res.status(400).json({
       success: false,
-      message: "Failed to Update validations",
+      message: "Failed to Update product",
       error: err.toString(),
     });
   }
 };
 
-const deleteValidationDocument = async (req, res) => {
+const deleteProduct = async (req, res) => {
   try {
-    const validationId = req.params.id;
-    const result = await Validation.updateOne(
-      { _id: validationId },
+    const id = req.params.id;
+    const result = await Product.updateOne(
+      { _id: id },
       {
         $set: { deleted: true },
       }
@@ -110,27 +95,27 @@ const deleteValidationDocument = async (req, res) => {
     if (result?.modifiedCount > 0) {
       return res
         .status(200)
-        .json({ message: "Validdation removed successfully", result });
+        .json({ message: "Product removed successfully", result });
     } else {
       return res
         .status(404)
-        .json({ message: "Failed to remove validation", result });
+        .json({ message: "Failed to remove product", result });
     }
   } catch (err) {
     console.error("Failed to delete field ", err);
     return res.status(404).json({
       success: false,
-      message: "Failed to remove validation",
+      message: "Failed to remove product",
       error: err.toString(),
     });
   }
 };
 
-const deleteManyValidationDocuments = async (req, res) => {
+const deleteManyProduct = async (req, res) => {
   try {
     const validationIds = req.body;
     console.log("validationIds ", validationIds);
-    const result = await Validation.updateMany(
+    const result = await Product.updateMany(
       { _id: { $in: validationIds } },
       {
         $set: { deleted: true },
@@ -160,7 +145,7 @@ export default {
   index,
   add,
   view,
-  editWholeValidationsArray,
-  deleteValidationDocument,
-  deleteManyValidationDocuments,
+  editProduct,
+  deleteProduct,
+  deleteManyProduct,
 };
