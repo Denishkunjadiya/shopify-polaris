@@ -4,7 +4,7 @@ import cors from "cors";
 
 import db from "./db/config.js";
 import route from "./controllers/route.js";
-// require("dotenv").config();
+import "dotenv/config";
 
 const port = process.env.PORT || 5001;
 
