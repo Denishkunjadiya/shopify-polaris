@@ -41,9 +41,9 @@ import {
 } from "ckeditor5";
 import { useNavigate } from "react-router-dom";
 
-import ImageUpload from "./ImageUpload";
 import CommonAutocomplete from "./commonComponent/CommonAutocomplate";
 import CommonCombobox from "./commonComponent/CommonCombobox";
+import ImageUpload from "./commonComponent/ImageUpload";
 
 import "ckeditor5-premium-features/ckeditor5-premium-features.css";
 import "ckeditor5/ckeditor5.css";

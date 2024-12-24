@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import {
   Badge,
@@ -16,6 +16,8 @@ import {
   useSetIndexFiltersMode,
 } from "@shopify/polaris";
 import { useNavigate } from "react-router-dom";
+
+import axiosInstance from "../service/axiosInstance";
 
 import data from "./data.json";
 
@@ -417,6 +419,15 @@ const ProductPage = () => {
     return columnList.findIndex((item) => item === field);
   };
 
+  const fetchData = async () => {
+    const response = await axiosInstance.get("/api/product");
+    console.log(response?.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Page
       title="Products"
@@ -436,66 +447,64 @@ const ProductPage = () => {
         },
       ]}
     >
-      <Card>
-        <IndexFilters
-          // sort
-          sortOptions={sortOptions}
-          sortSelected={sortSelected}
-          onSort={handleSortChange}
-          // search
-          queryValue={queryValue}
-          queryPlaceholder="Searching in all products"
-          onQueryChange={handleFiltersQueryChange}
-          onQueryClear={() => setQueryValue("")}
-          primaryAction={primaryAction}
-          cancelAction={{
-            onAction: onHandleCancel,
-            disabled: false,
-            loading: false,
-          }}
-          tabs={tabs}
-          selected={selected}
-          onSelect={setSelected}
-          canCreateNewView
-          onCreateNewView={onCreateNewView}
-          // filters
-          filters={filters}
-          appliedFilters={appliedFilters}
-          onClearAll={handleFiltersClearAll}
-          mode={mode}
-          setMode={setMode}
-        />
-        <IndexTable
-          condensed={useBreakpoints().smDown}
-          resourceName={{
-            singular: "product",
-            plural: "products",
-          }}
-          itemCount={data.length}
-          selectedItemsCount={
-            allResourcesSelected ? "All" : selectedResources.length
-          }
-          onSelectionChange={handleSelectionChange}
-          onSort={handleSortToggle}
-          sortable={[true, false, true, false, false, false, true, true]}
-          sortDirection={
-            sortSelected[0].split(" ")[1] === "asc" ? "ascending" : "descending"
-          }
-          sortColumnIndex={getColumnIndex()}
-          headings={[
-            { title: "Product" },
-            { title: "Status" },
-            { title: "Inventory" },
-            { title: "Sales channels", alignment: "end" },
-            { title: "B2B catalogs", alignment: "end" },
-            { title: "Category" },
-            { title: "Type" },
-            { title: "Vendor" },
-          ]}
-        >
-          {rowMarkup}
-        </IndexTable>
-      </Card>
+      <IndexFilters
+        // sort
+        sortOptions={sortOptions}
+        sortSelected={sortSelected}
+        onSort={handleSortChange}
+        // search
+        queryValue={queryValue}
+        queryPlaceholder="Searching in all products"
+        onQueryChange={handleFiltersQueryChange}
+        onQueryClear={() => setQueryValue("")}
+        primaryAction={primaryAction}
+        cancelAction={{
+          onAction: onHandleCancel,
+          disabled: false,
+          loading: false,
+        }}
+        tabs={tabs}
+        selected={selected}
+        onSelect={setSelected}
+        canCreateNewView
+        onCreateNewView={onCreateNewView}
+        // filters
+        filters={filters}
+        appliedFilters={appliedFilters}
+        onClearAll={handleFiltersClearAll}
+        mode={mode}
+        setMode={setMode}
+      />
+      <IndexTable
+        condensed={useBreakpoints().smDown}
+        resourceName={{
+          singular: "product",
+          plural: "products",
+        }}
+        itemCount={data.length}
+        selectedItemsCount={
+          allResourcesSelected ? "All" : selectedResources.length
+        }
+        onSelectionChange={handleSelectionChange}
+        onSort={handleSortToggle}
+        sortable={[true, false, true, false, false, false, true, true]}
+        sortDirection={
+          sortSelected[0].split(" ")[1] === "asc" ? "ascending" : "descending"
+        }
+        sortColumnIndex={getColumnIndex()}
+        headings={[
+          { title: "Product" },
+          { title: "Status" },
+          { title: "Inventory" },
+          { title: "Sales channels", alignment: "end" },
+          { title: "B2B catalogs", alignment: "end" },
+          { title: "Category" },
+          { title: "Type" },
+          { title: "Vendor" },
+        ]}
+      >
+        {rowMarkup}
+      </IndexTable>
     </Page>
   );
 };
