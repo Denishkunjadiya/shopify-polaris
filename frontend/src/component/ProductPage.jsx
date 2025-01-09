@@ -19,12 +19,10 @@ import { useNavigate } from "react-router-dom";
 
 import axiosInstance from "../service/axiosInstance";
 
-import data from "./data.json";
-
 const ProductPage = () => {
   const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   const navigate = useNavigate();
-  const [sortedData, setSortedData] = useState(data);
+  const [tableData, setTableData] = useState([]);
 
   // save filters list
   const [itemStrings, setItemStrings] = useState([
@@ -297,9 +295,9 @@ const ProductPage = () => {
   }
 
   const { selectedResources, allResourcesSelected, handleSelectionChange } =
-    useIndexResourceState(data);
+    useIndexResourceState(tableData);
 
-  const rowMarkup = sortedData.map(
+  const rowMarkup = tableData.map(
     ({
       id,
       product,
@@ -374,7 +372,7 @@ const ProductPage = () => {
 
   const handleSortChange = (sortValue) => {
     const [field, direction] = sortValue[0].split(" ");
-    const sorted = [...data].sort((a, b) => {
+    const sorted = [...tableData].sort((a, b) => {
       if (direction === "asc") {
         return a[field] < b[field] ? -1 : a[field] > b[field] ? 1 : 0;
       } else {
@@ -382,7 +380,7 @@ const ProductPage = () => {
       }
     });
 
-    setSortedData(sorted);
+    setTableData(sorted);
     setSortSelected(sortValue);
   };
 
@@ -421,7 +419,7 @@ const ProductPage = () => {
 
   const fetchData = async () => {
     const response = await axiosInstance.get("/api/product");
-    console.log(response?.data);
+    setTableData(response?.data?.map((item) => ({ ...item, id: item?._id })));
   };
 
   useEffect(() => {
@@ -481,7 +479,7 @@ const ProductPage = () => {
           singular: "product",
           plural: "products",
         }}
-        itemCount={data.length}
+        itemCount={tableData.length}
         selectedItemsCount={
           allResourcesSelected ? "All" : selectedResources.length
         }
