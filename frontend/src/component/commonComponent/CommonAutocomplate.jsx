@@ -5,16 +5,16 @@ import { Autocomplete } from "@shopify/polaris";
 const CommonAutocomplate = ({
   label = "Search",
   placeholder = "Search",
-  optionsData = [
-    { value: "rustic", label: "Rustic" },
-    { value: "antique", label: "Antique" },
-    { value: "vinyl", label: "Vinyl" },
-    { value: "vintage", label: "Vintage" },
-    { value: "refurbished", label: "Refurbished" },
-  ],
+  options: optionsData,
   onSelectionChange = () => {},
 }) => {
-  const deselectedOptions = useMemo(() => optionsData, [optionsData]);
+  const deselectedOptions = useMemo(
+    () =>
+      optionsData && optionsData?.length > 0
+        ? optionsData?.map((item) => ({ value: item, label: item }))
+        : [],
+    [optionsData],
+  );
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState(deselectedOptions);

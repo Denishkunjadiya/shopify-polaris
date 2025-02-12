@@ -83,7 +83,8 @@ const AddProduct = () => {
     resetForm,
   } = formik;
 
-  console.log({ errors, touched, values });
+  // console.log({ errors, touched, values });
+  console.log(values);
 
   const handleFieldChange = (fieldName) => (value) => {
     setFieldValue(fieldName, value);
@@ -181,7 +182,11 @@ const AddProduct = () => {
                           "numberedList",
                         ],
                       }}
-                      data="<p>Hello from the first editor working with the context!</p>"
+                      data={values?.description || ""}
+                      onChange={(event, editor) => {
+                        const data = editor.getData();
+                        setFieldValue("description", data); // Update Formik state
+                      }}
                       contextItemMetadata={{
                         name: "editor1",
                         yourAdditionalData: 2,
@@ -195,12 +200,25 @@ const AddProduct = () => {
               </Box>
               <Box style={{ marginBottom: "15px" }}>
                 <FormLayout>
-                  <ImageUpload />
+                  <ImageUpload
+                  // value={}
+                  // onChange={}
+                  />
                 </FormLayout>
               </Box>
               <Box style={{ marginBottom: "15px" }}>
                 <FormLayout>
-                  <CommonAutocomplete />
+                  <CommonAutocomplete
+                    options={[
+                      "Rustic",
+                      "Antique",
+                      "Vinyl",
+                      "Vintage",
+                      "Refurbished"
+                    ]}
+                  // value={}
+                  // onChange={}
+                  />
                 </FormLayout>
               </Box>
             </Card>
@@ -522,8 +540,8 @@ const AddProduct = () => {
               <Select
                 label="Status"
                 options={["Active", "Draft"]}
-                // onChange={handleSelectChange}
-                // value={selected}
+                onChange={(e) => setFieldValue("status", e)}
+                value={values?.status}
               />
             </Card>
 
@@ -537,7 +555,7 @@ const AddProduct = () => {
                     <Button
                       icon={<Icon source={MenuHorizontalIcon} />}
                       variant="plain"
-                      onClick={() => {}}
+                      onClick={() => { }}
                       accessibilityLabel="Preview"
                     />
                   </InlineGrid>
@@ -562,24 +580,24 @@ const AddProduct = () => {
                   <Select
                     label="Product organization"
                     options={["accessories", "giftcard", "snowboard"]}
-                    // onChange={handleSelectChange}
-                    // value={selected}
+                    onChange={(e) => setFieldValue("productOrganization", e)}
+                    value={values?.productOrganization}
                   />
                 </Box>
                 <Box paddingBlockStart="200">
                   <Select
                     label="Vendor"
                     options={["Vendor 1", "Vendor 2", "Vendor 3"]}
-                    // onChange={handleSelectChange}
-                    // value={selected}
+                    onChange={(e) => setFieldValue("vendor", e)}
+                    value={values?.vendor}
                   />
                 </Box>
                 <Box paddingBlockStart="200">
-                  <CommonCombobox />
-                  {/*  options={["Collection 1", "Collection 2", "Collection 3"]} */}
-                </Box>
-                <Box paddingBlockStart="200">
-                  <CommonCombobox />
+                  <CommonCombobox
+                    formik={formik}
+                    name="tags"
+                    options={["Collection 1", "Collection 2", "Collection 3"]}
+                  />
                 </Box>
               </Card>
             </Box>

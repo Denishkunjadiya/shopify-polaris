@@ -2,33 +2,29 @@ import { useCallback, useMemo, useState } from "react";
 
 import {
   AutoSelection,
-  BlockStack,
   Box,
   Combobox,
   Icon,
   InlineStack,
-  LegacyStack,
   Listbox,
   Tag,
-  TextContainer,
 } from "@shopify/polaris";
 import { SearchIcon } from "@shopify/polaris-icons";
 
-export default function CommonCombobox() {
+export default function CommonCombobox({ formik, name, options: propOptions }) {
   const deselectedOptions = useMemo(
-    () => [
-      { value: "rustic", label: "Rustic" },
-      { value: "antique", label: "Antique" },
-      { value: "vinyl", label: "Vinyl" },
-      { value: "vintage", label: "Vintage" },
-      { value: "refurbished", label: "Refurbished" },
-    ],
-    [],
+    () =>
+      propOptions && propOptions.length > 0
+        ? propOptions.map((item) => ({ value: item, label: item }))
+        : [],
+    [propOptions],
   );
 
-  const [selectedOptions, setSelectedOptions] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState(deselectedOptions);
+
+  // Get selected options from Formik
+  const selectedOptions = formik.values[name] || [];
 
   const escapeSpecialRegExCharacters = useCallback(
     (value) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
@@ -55,30 +51,32 @@ export default function CommonCombobox() {
 
   const updateSelection = useCallback(
     (selected) => {
+      let newSelectedOptions;
+
       if (selectedOptions.includes(selected)) {
-        setSelectedOptions(
-          selectedOptions.filter((option) => option !== selected),
+        newSelectedOptions = selectedOptions.filter(
+          (option) => option !== selected,
         );
       } else {
-        setSelectedOptions([...selectedOptions, selected]);
+        newSelectedOptions = [...selectedOptions, selected];
       }
 
+      formik.setFieldValue(name, newSelectedOptions);
       updateText("");
     },
-    [selectedOptions, updateText],
+    [selectedOptions, name, formik, updateText],
   );
 
   const removeTag = useCallback(
     (tag) => () => {
-      const options = [...selectedOptions];
-      options.splice(options.indexOf(tag), 1);
-      setSelectedOptions(options);
+      const newOptions = selectedOptions.filter((option) => option !== tag);
+      formik.setFieldValue(name, newOptions);
     },
-    [selectedOptions],
+    [selectedOptions, name, formik],
   );
 
   const tagsMarkup = selectedOptions.map((option) => (
-    <Box style={{ margin: "5px" }}>
+    <Box style={{ margin: "5px" }} key={option}>
       <Tag key={`option-${option}`} onRemove={removeTag(option)}>
         {option}
       </Tag>
@@ -87,20 +85,16 @@ export default function CommonCombobox() {
 
   const optionsMarkup =
     options.length > 0
-      ? options.map((option) => {
-          const { label, value } = option;
-
-          return (
-            <Listbox.Option
-              key={`${value}`}
-              value={value}
-              selected={selectedOptions.includes(value)}
-              accessibilityLabel={label}
-            >
-              {label}
-            </Listbox.Option>
-          );
-        })
+      ? options.map(({ label, value }) => (
+          <Listbox.Option
+            key={value}
+            value={value}
+            selected={selectedOptions.includes(value)}
+            accessibilityLabel={label}
+          >
+            {label}
+          </Listbox.Option>
+        ))
       : null;
 
   return (
@@ -112,23 +106,22 @@ export default function CommonCombobox() {
             prefix={<Icon source={SearchIcon} />}
             onChange={updateText}
             label="Search tags"
-            // labelHidden
             value={inputValue}
             placeholder="Search tags"
             autoComplete="off"
           />
         }
       >
-        {optionsMarkup ? (
+        {optionsMarkup && (
           <Listbox
             autoSelection={AutoSelection.None}
             onSelect={updateSelection}
           >
             {optionsMarkup}
           </Listbox>
-        ) : null}
+        )}
       </Combobox>
-      <div>
+      <div style={{ marginTop: "3px" }}>
         <InlineStack>{tagsMarkup}</InlineStack>
       </div>
     </>
