@@ -42,6 +42,8 @@ import {
 import { Form, useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 
+import axiosInstance from "../service/axiosInstance";
+
 import CommonAutocomplete from "./commonComponent/CommonAutocomplate";
 import CommonCombobox from "./commonComponent/CommonCombobox";
 import ImageUpload from "./commonComponent/ImageUpload";
@@ -68,9 +70,34 @@ const AddProduct = () => {
   const formik = useFormik({
     initialValues: {
       title: "",
+      description: "",
+      price: "",
+      compareAtPrice: "",
+      chargeTaxOnThisProduct: false,
+      costPerItem: "",
+      profit: "",
+      profitInPercentage: "",
+      trackQuantity: false,
+      myCustomLocation: "",
+      shopLocation: "",
+      continueSellingWhenOutOfStock: false,
+      skuStockKeepingUnit: "",
+      barcode: "",
+      physicalProduct: false,
+      weight: "",
+      snowboardLength: "",
+      snowboardBindingMount: "",
+      status: "",
+      productOrganization: "",
+      vendor: "",
+      tags: [],
     },
-    onSubmit: (values) => {
-      console.log("Form submitted");
+    onSubmit: async (values) => {
+      const response = await axiosInstance.post("/api/product", values);
+      if (response.status === 200) {
+        navigate("/");
+      }
+      console.log("Form submitted", response);
     },
   });
   const {
@@ -82,9 +109,6 @@ const AddProduct = () => {
     setFieldValue,
     resetForm,
   } = formik;
-
-  // console.log({ errors, touched, values });
-  console.log(values);
 
   const handleFieldChange = (fieldName) => (value) => {
     setFieldValue(fieldName, value);
@@ -214,10 +238,10 @@ const AddProduct = () => {
                       "Antique",
                       "Vinyl",
                       "Vintage",
-                      "Refurbished"
+                      "Refurbished",
                     ]}
-                  // value={}
-                  // onChange={}
+                    // value={}
+                    // onChange={}
                   />
                 </FormLayout>
               </Box>
@@ -555,7 +579,7 @@ const AddProduct = () => {
                     <Button
                       icon={<Icon source={MenuHorizontalIcon} />}
                       variant="plain"
-                      onClick={() => { }}
+                      onClick={() => {}}
                       accessibilityLabel="Preview"
                     />
                   </InlineGrid>

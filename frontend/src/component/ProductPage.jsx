@@ -300,7 +300,7 @@ const ProductPage = () => {
   const rowMarkup = tableData.map(
     ({
       id,
-      product,
+      title,
       status,
       inventory,
       salesChannels,
@@ -332,7 +332,7 @@ const ProductPage = () => {
               alt=""
             />
             <Text variant="bodyMd" as="span">
-              {product}
+              {title}
             </Text>
           </div>
         </IndexTable.Cell>
